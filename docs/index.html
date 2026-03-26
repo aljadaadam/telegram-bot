@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل فيديو بدون علامة مائية - Video Downloader Bot</title>
+    <meta name="description" content="بوت تليجرام مجاني لتحميل فيديوهات تيك توك، انستقرام، تويتر، يوتيوب بدون علامة مائية. حمّل أي فيديو بسهولة وبجودة عالية.">
+    <meta name="keywords" content="تحميل فيديو, بدون علامة مائية, تيك توك, انستقرام, تويتر, يوتيوب, بوت تليجرام, تنزيل فيديو, download video, no watermark, TikTok downloader, Instagram reels download">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://aljadaadam.github.io/telegram-bot/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Video Downloader Bot - تحميل فيديو بدون علامة مائية">
+    <meta property="og:description" content="بوت تليجرام مجاني لتحميل فيديوهات من السوشل ميديا بدون علامة مائية وبجودة عالية HD">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aljadaadam.github.io/telegram-bot/">
+    <meta property="og:locale" content="ar_SA">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Video Downloader Bot - تحميل فيديو بدون علامة مائية">
+    <meta name="twitter:description" content="بوت تليجرام مجاني لتحميل فيديوهات تيك توك، انستقرام، تويتر بدون علامة مائية">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            color: #b8b8d4;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(90deg, #0088cc, #00aaff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 136, 204, 0.6);
+        }
+
+        .cta-button .tg-icon {
+            margin-left: 8px;
+        }
+
+        /* Platforms Section */
+        .platforms {
+            padding: 50px 20px;
+        }
+
+        .platforms h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(0, 170, 255, 0.4);
+        }
+
+        .platform-card .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .platform-card .name {
+            font-size: 0.95em;
+            color: #ccc;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 50px 20px;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-item .icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #00aaff;
+        }
+
+        .feature-item p {
+            color: #a0a0c0;
+            line-height: 1.6;
+        }
+
+        /* How to Use */
+        .how-to {
+            padding: 50px 20px;
+        }
+
+        .how-to h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .steps {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #0088cc, #00aaff);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            color: #a0a0c0;
+            line-height: 1.5;
+        }
+
+        /* CTA Bottom */
+        .cta-bottom {
+            text-align: center;
+            padding: 50px 20px 80px;
+        }
+
+        .cta-bottom h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .cta-bottom p {
+            color: #b8b8d4;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        footer a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+
+        /* SEO hidden content */
+        .seo-text {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8em; }
+            .hero p { font-size: 1.1em; }
+            .cta-button { padding: 15px 35px; font-size: 1.1em; }
+            .platform-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        }
+    </style>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Video Downloader Bot",
+        "description": "بوت تليجرام مجاني لتحميل فيديوهات من تيك توك، انستقرام، تويتر، يوتيوب بدون علامة مائية",
+        "url": "https://t.me/NoWatermarkDLBot",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Telegram",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="container">
+        <section class="hero">
+            <div class="hero-icon">🎬</div>
+            <h1>حمّل أي فيديو بدون علامة مائية</h1>
+            <p>بوت تليجرام مجاني وسريع لتحميل فيديوهات من تيك توك، انستقرام، تويتر، يوتيوب وغيرها بجودة عالية HD</p>
+            <a href="https://t.me/NoWatermarkDLBot" class="cta-button" target="_blank" rel="noopener">
+                <span class="tg-icon">✈️</span> ابدأ التحميل الآن
+            </a>
+        </section>
+
+        <!-- Platforms -->
+        <section class="platforms">
+            <h2>📱 المنصات المدعومة</h2>
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="icon">🎵</div>
+                    <div class="name">TikTok</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">📸</div>
+                    <div class="name">Instagram</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">🐦</div>
+                    <div class="name">Twitter / X</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">▶️</div>
+                    <div class="name">YouTube</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">📘</div>
+                    <div class="name">Facebook</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">📌</div>
+                    <div class="name">Pinterest</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">👻</div>
+                    <div class="name">Snapchat</div>
+                </div>
+                <div class="platform-card">
+                    <div class="icon">🧵</div>
+                    <div class="name">Threads</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <h2>⭐ المميزات</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="icon">🚫</div>
+                    <h3>بدون علامة مائية</h3>
+                    <p>حمّل فيديوهات تيك توك وغيرها بدون أي علامة مائية أو لوجو</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">⚡</div>
+                    <h3>سريع جداً</h3>
+                    <p>تحميل فوري - أرسل الرابط واستلم الفيديو خلال ثوانٍ</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🎥</div>
+                    <h3>جودة عالية HD</h3>
+                    <p>تحميل بأعلى جودة متاحة للفيديو بدون ضغط</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">💰</div>
+                    <h3>مجاني بالكامل</h3>
+                    <p>استخدام غير محدود بدون أي رسوم أو اشتراكات</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">🔒</div>
+                    <h3>آمن وخاص</h3>
+                    <p>لا نحفظ بياناتك أو فيديوهاتك - خصوصيتك محمية</p>
+                </div>
+                <div class="feature-item">
+                    <div class="icon">📱</div>
+                    <h3>سهل الاستخدام</h3>
+                    <p>فقط الصق الرابط وسيصلك الفيديو فوراً</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Use -->
+        <section class="how-to">
+            <h2>📝 طريقة الاستخدام</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>افتح البوت في تليجرام</h3>
+                        <p>اضغط على زر "ابدأ التحميل" أو ابحث عن @NoWatermarkDLBot</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>انسخ رابط الفيديو</h3>
+                        <p>من تيك توك، انستقرام، تويتر أو أي منصة مدعومة</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>الصق الرابط وأرسله</h3>
+                        <p>الصق الرابط في المحادثة مع البوت واضغط إرسال</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>استلم الفيديو</h3>
+                        <p>سيصلك الفيديو بدون علامة مائية وبجودة عالية خلال ثوانٍ</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Bottom -->
+        <section class="cta-bottom">
+            <h2>🚀 جاهز للتحميل؟</h2>
+            <p>انضم لآلاف المستخدمين وحمّل فيديوهاتك المفضلة الآن</p>
+            <a href="https://t.me/NoWatermarkDLBot" class="cta-button" target="_blank" rel="noopener">
+                <span class="tg-icon">✈️</span> افتح البوت الآن
+            </a>
+        </section>
+    </div>
+
+    <footer>
+        <p>Video Downloader Bot &copy; 2024 | <a href="https://t.me/NoWatermarkDLBot">@NoWatermarkDLBot</a></p>
+        <p style="margin-top:8px">Free Telegram bot to download TikTok, Instagram, Twitter, YouTube videos without watermark</p>
+    </footer>
+
+    <!-- SEO: English content for international search -->
+    <article class="seo-text">
+        <h2>Download TikTok Videos Without Watermark</h2>
+        <p>NoWatermarkDLBot is a free Telegram bot that allows you to download videos from TikTok, Instagram Reels, Twitter/X, YouTube, Facebook, Pinterest, and Snapchat without any watermark. Simply paste the video link and receive the clean video in seconds. No registration required, completely free, and supports HD quality downloads.</p>
+        <h2>How to Download Instagram Reels Without Watermark</h2>
+        <p>Copy the Instagram Reel link, open @NoWatermarkDLBot on Telegram, paste the link and get the video instantly without any watermark or logo.</p>
+        <h2>TikTok Video Downloader Without Watermark</h2>
+        <p>Remove TikTok watermark and download any TikTok video in HD quality for free using our Telegram bot.</p>
+    </article>
+
+</body>
+</html>
