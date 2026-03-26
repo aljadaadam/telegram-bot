@@ -1,6 +1,7 @@
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
-const { detectPlatform, extractUrl, getVideoDownload, downloadVideoBuffer } = require('./downloader');
+const fs = require('fs');
+const { detectPlatform, extractUrl, getVideoDownload, downloadVideoBuffer, cleanupFile } = require('./downloader');
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
@@ -88,7 +89,7 @@ bot.on('message', async (msg) => {
   try {
     const result = await getVideoDownload(url);
 
-    if (!result || !result.url) {
+    if (!result || (!result.url && !result.filePath)) {
       await bot.editMessageText(
         '❌ لم أتمكن من تحميل هذا الفيديو. تأكد أن الرابط صحيح والفيديو عام.',
         { chat_id: chatId, message_id: statusMsg.message_id }
@@ -101,17 +102,11 @@ bot.on('message', async (msg) => {
       { chat_id: chatId, message_id: statusMsg.message_id }
     );
 
-    try {
-      // Try sending by URL first (faster)
-      await bot.sendVideo(chatId, result.url, {
-        caption: `✅ تم التحميل من ${platformName}\n🤖 @YourBotUsername`,
-        supports_streaming: true,
-      });
-    } catch {
-      // If sending by URL fails, download buffer and send
-      const buffer = await downloadVideoBuffer(result.url);
-
-      if (buffer.length > 50 * 1024 * 1024) {
+    if (result.filePath) {
+      // yt-dlp downloaded to local file
+      const fileSize = fs.statSync(result.filePath).size;
+      if (fileSize > 50 * 1024 * 1024) {
+        cleanupFile(result.filePath);
         await bot.editMessageText(
           '❌ حجم الفيديو أكبر من 50 ميجابايت. لا يمكن إرساله عبر تليجرام.',
           { chat_id: chatId, message_id: statusMsg.message_id }
@@ -119,13 +114,38 @@ bot.on('message', async (msg) => {
         return;
       }
 
-      await bot.sendVideo(chatId, buffer, {
-        caption: `✅ تم التحميل من ${platformName}\n🤖 @YourBotUsername`,
+      await bot.sendVideo(chatId, result.filePath, {
+        caption: `✅ تم التحميل من ${platformName}`,
         supports_streaming: true,
-      }, {
-        filename: 'video.mp4',
-        contentType: 'video/mp4',
       });
+
+      cleanupFile(result.filePath);
+    } else {
+      // Remote URL
+      try {
+        await bot.sendVideo(chatId, result.url, {
+          caption: `✅ تم التحميل من ${platformName}`,
+          supports_streaming: true,
+        });
+      } catch {
+        const buffer = await downloadVideoBuffer(result.url);
+
+        if (buffer.length > 50 * 1024 * 1024) {
+          await bot.editMessageText(
+            '❌ حجم الفيديو أكبر من 50 ميجابايت. لا يمكن إرساله عبر تليجرام.',
+            { chat_id: chatId, message_id: statusMsg.message_id }
+          );
+          return;
+        }
+
+        await bot.sendVideo(chatId, buffer, {
+          caption: `✅ تم التحميل من ${platformName}`,
+          supports_streaming: true,
+        }, {
+          filename: 'video.mp4',
+          contentType: 'video/mp4',
+        });
+      }
     }
 
     // Delete the status message after sending
